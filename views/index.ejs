@@ -1,0 +1,79 @@
+<html>
+<head>
+	<title>Message Board</title>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<style type="text/css">
+	p{
+		text-indent: 50px;
+	}
+</style>
+
+</head>
+<body>
+	<div class="container">
+		<h1>Welcome to the Message Board</h1>
+		<div id="post_form">
+			<form class="form-horizontal" role="form" action="/post_message" method="post">
+			  <div class="form-group">
+			    <label class="control-label col-sm-2" for="name">Name:</label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control" id="name" name="name">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-sm-2" for="post">Post:</label>
+			    <div class="col-sm-8">
+			      <textarea class="form-control" id="message" name="message"></textarea>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <div class="col-sm-offset-2 col-sm-4">
+			      <button type="submit" class="btn btn-info">Post Message</button>
+			    </div>
+			  </div>
+			</form>
+		</div>
+		<div id="messages">
+			<% if(message != null){
+				for(var x in message){ %>
+				<h3>Name: <%= message[x].name %></h3>
+				<h3>Message: <%= message[x].message %></h3>
+				<% if(message[x].comments != null){
+					for(var i = 0; i < message[x].comments.length; i++){ %>
+				<p>Name: <%= message[x].comments[i].name %></p>
+				<p>Comment: <%= message[x].comments[i].comment %></p>
+						<% } %>
+				<% } %>
+				<form class="form-horizontal" role="form" action="/post_comment/<%= message[x]._id %>" method="post">
+				  <div class="form-group">
+				    <label class="control-label col-sm-2" for="name">Name:</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="name" name="name">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="control-label col-sm-2" for="comment">Comment:</label>
+				    <div class="col-sm-6">
+				      <textarea class="form-control" id="comment" name="comment"></textarea>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <div class="col-sm-offset-2 col-sm-4">
+				      <button type="submit" class="btn btn-success">Post Comment</button>
+				    </div>
+				  </div>
+				</form>
+				<% } %>
+			<% } %>			
+		</div>
+	</div>
+</body>
+</html>
